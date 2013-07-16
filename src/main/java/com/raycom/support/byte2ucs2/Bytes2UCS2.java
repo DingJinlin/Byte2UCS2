@@ -4,7 +4,6 @@ import com.raycom.support.HexConvert;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -14,12 +13,16 @@ import java.util.Set;
  * Date: 13-7-15
  * Time: 下午1:21
  */
-public class Byte2UCS2 extends UCS2Convert {
+public class Bytes2UCS2 extends UCS2Convert {
     // 实际数据长度
     int dataLen;
 
-    public Byte2UCS2(byte[] data) {
+    public Bytes2UCS2(byte[] data) throws Exception {
         dataLen = data.length;
+
+        if (dataLen > MAX_DATA_LEN) {
+            throw new Exception("超出取大长度");
+        }
 
         // 数据内容缓存长度
         int dataBufLen = (data.length + 1) / 2 * 2;
@@ -33,89 +36,70 @@ public class Byte2UCS2 extends UCS2Convert {
 
     /**
      * 替换数据内容
+     *
      * @return
      */
     private void replaceData() {
         // 计算组数
         int groupCount = (dataBuf.length + GROUP_LEN - 1) / GROUP_LEN;
+        for (int groupSeq = 0; groupSeq != groupCount; groupSeq++) {
+            Set<Byte> positionSet = new HashSet<Byte>();
+            for (int position = 0; position != GROUP_WORD_LEN; position++) {
+                int dataBufPosition = (groupSeq * GROUP_LEN) + (position * 2);
+                if (dataBuf[dataBufPosition] > (byte) 0xD7 && dataBuf[dataBufPosition] < (byte) 0xE0) {
+                    dataBuf[dataBufPosition] &= REP_BYTE;
 
-        // 计算包数
-        int packCount = (groupCount + PACK_GROUP_COUNT - 1) / PACK_GROUP_COUNT;
-
-        // 将内容进行替换
-        for(int packSeq = 0; packSeq != packCount; packSeq++) {
-            // 替换区Map
-            Map<Integer, Set<Byte>> group = new HashMap<Integer, Set<Byte>>();
-            for (int groupSeq = 0; groupSeq != groupCount; groupSeq++) {
-                Set<Byte> positionSet = new HashSet<Byte>();
-                for (int position = 0; position != GROUP_WORD_LEN; position++) {
-                    int dataBufPosition = (packSeq * PACK_LEN) + (groupSeq * GROUP_LEN) + (position * 2);
-                    if (dataBuf[dataBufPosition] > 0xD7 && dataBuf[dataBufPosition] < 0xE0) {
-                        dataBuf[dataBufPosition] &= REP_BYTE;
-
-                        // 记录替换位置
-                        positionSet.add((byte)position);
-                    }
-                }
-
-                if(positionSet.size() != 0) {
-                    // 记录替换分组序号
-                    group.put(groupSeq, positionSet);
+                    // 记录替换位置
+                    positionSet.add((byte) position);
                 }
             }
-            packs.put(packSeq, group);
+
+            if (positionSet.size() != 0) {
+                // 记录替换分组序号
+                groups.put(groupSeq, positionSet);
+            }
         }
     }
-
 
 
     /**
      * 组包替换组内容
+     *
      * @return
      */
-    private Convert4BitBuffer createReplacementGroupBuf(Map<Integer, Set<Byte>> groups, Convert4BitBuffer convert4BitBuffer) {
+    private byte[] createReplacementGroupBuf(Map<Integer, Set<Byte>> groups) {
         Set<Integer> groupSeqSet = groups.keySet();
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        buffer.clear();
+        //记录总组数
+        buffer.put((byte) groups.size());
+
         for (int groupSeq : groupSeqSet) {
             // 记录当前组序号
-            convert4BitBuffer.putReplacementData((byte) groupSeq);
-
+            buffer.put((byte) groupSeq);
             // 记录替换数
-            Set<Byte> positionSet =  groups.get(groupSeq);
-            convert4BitBuffer.putReplacementData((byte) positionSet.size());
+            Set<Byte> positionSet = groups.get(groupSeq);
+            Convert4Bit convert4Bit = new Convert4Bit();
+
+            convert4Bit.coding((byte) positionSet.size());
 
             // 记录替换位置
-            for(byte position : positionSet) {
-                convert4BitBuffer.putReplacementData(position);
+            for (byte position : positionSet) {
+                convert4Bit.coding(position);
             }
+            buffer.put(convert4Bit.getValues());
         }
 
-        return convert4BitBuffer;
-    }
-
-    /**
-     * 组包替换包内容
-     * @param packs
-     * @return
-     */
-    private Convert4BitBuffer createReplacementPackBuf(Map<Integer, Map<Integer, Set<Byte>>> packs, Convert4BitBuffer convert4BitBuffer) {
-        // 记录包含的包数
-        convert4BitBuffer.putReplacementData((byte) packs.size());
-
-        Set<Integer> packSeqSet = packs.keySet();
-
-        for (int packSeq : packSeqSet) {
-            // 记录当前包序号
-            convert4BitBuffer.putReplacementData((byte) packSeq);
-
-            // 记录包含包数
-            Map<Integer, Set<Byte>> groups =  packs.get(packSeq);
-            convert4BitBuffer.putReplacementData((byte) groups.size());
-
-            // 组包包内容
-            convert4BitBuffer = createReplacementGroupBuf(groups, convert4BitBuffer);
+        int bufLen = buffer.position();
+        buffer.flip();
+        int replacementAreaDataLen = (bufLen + 1) / 2 * 2;
+        byte[] replacementAreaData = new byte[replacementAreaDataLen];
+        if (replacementAreaDataLen != 0) {
+            replacementAreaData[replacementAreaDataLen - 1] = FILL_BYTE;
+            buffer.get(replacementAreaData, 0, bufLen);
         }
 
-        return convert4BitBuffer;
+        return replacementAreaData;
     }
 
     @Override
@@ -123,22 +107,16 @@ public class Byte2UCS2 extends UCS2Convert {
         replaceData();
 
         // 替换区
-        Convert4BitBuffer convertBuf = new Convert4BitBuffer();
-        convertBuf = createReplacementPackBuf(packs, convertBuf);
-        byte[] replacementArea = convertBuf.getConvertResult();
-
-        // 将替换区长度变为2的倍数
-        int len = (replacementArea.length + 1) / 2 * 2;
-        byte[] replacementAreaBuf = new byte[len];
-        replacementAreaBuf[len - 1] = FILL_BYTE;
-        System.arraycopy(replacementArea, 0, replacementAreaBuf, 0, replacementAreaBuf.length);
+        byte[] replacementArea = createReplacementGroupBuf(groups);
 
         // 组包内容
-        ByteBuffer buf = ByteBuffer.allocate(2 + replacementAreaBuf.length + dataLen);
+        ByteBuffer buf = ByteBuffer.allocate(2 + replacementArea.length + dataBuf.length);
         buf.clear();
         buf.order(ByteOrder.BIG_ENDIAN);
-        buf.putShort((short)dataLen);
-        buf.put(replacementAreaBuf);
+
+        // 设置内容长度
+        buf.putShort((short) dataLen);
+        buf.put(replacementArea);
         buf.put(dataBuf);
 
         return buf.array();
@@ -274,12 +252,17 @@ public class Byte2UCS2 extends UCS2Convert {
             (byte) 0xD2, (byte) 0x30, (byte) 0xD5, (byte) 0x44, (byte) 0x61, (byte) 0x54, (byte) 0x6D, (byte) 0x09,
             (byte) 0x26, (byte) 0xAF, (byte) 0xA0, (byte) 0x86, (byte) 0xB6, (byte) 0xBB, (byte) 0xE3, (byte) 0x46,
             (byte) 0xD3, (byte) 0x98, (byte) 0x35, (byte) 0xCC, (byte) 0x02, (byte) 0x3C, (byte) 0xA7, (byte) 0xC2
-        } ;
+        };
 
-        Byte2UCS2 byte2UCS2 = new Byte2UCS2(inData);
-        byte[] outData = byte2UCS2.convert();
-        System.out.println("In data: " + HexConvert.byte2String(inData));
-        System.out.println("Out data: " + HexConvert.byte2String(outData));
+        Bytes2UCS2 bytes2UCS2 = null;
+        try {
+            bytes2UCS2 = new Bytes2UCS2(inData);
+            byte[] outData = bytes2UCS2.convert();
+            System.out.println("In data: " + HexConvert.byte2String(inData));
+            System.out.println("Out data: " + HexConvert.byte2String(outData));
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
 }

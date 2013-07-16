@@ -7,7 +7,7 @@ import java.nio.ByteBuffer;
  * Date: 13-7-16
  * Time: 上午9:52
  */
-public class Convert4BitBuffer {
+public class Convert4Bit {
     public static final int BUF_LEN = 1024;
 
     // 现需要填充是高位还是低位
@@ -18,9 +18,9 @@ public class Convert4BitBuffer {
     /**
      * 转换时使用的构造函数
      */
-    public Convert4BitBuffer() {
+    public Convert4Bit() {
         isReplacementAreaBufPointHighBit = true;
-        ByteBuffer buf = ByteBuffer.allocate(BUF_LEN);
+        buf = ByteBuffer.allocate(BUF_LEN);
         buf.clear();
     }
 
@@ -28,7 +28,7 @@ public class Convert4BitBuffer {
      * 还原时使用的构造函数
      * @param dataBuf
      */
-    public Convert4BitBuffer(byte[] dataBuf) {
+    public Convert4Bit(byte[] dataBuf) {
         isReplacementAreaBufPointHighBit = true;
         buf = ByteBuffer.wrap(dataBuf);
         buf.clear();
@@ -38,12 +38,12 @@ public class Convert4BitBuffer {
      * 填充转换区
      * @param data
      */
-    public void putReplacementData(byte data) {
+    public void coding(byte data) {
         if (isReplacementAreaBufPointHighBit) {
             convertData = (byte) 0x00;
-            convertData &= (data << 4);
+            convertData = (byte)(data << 4);
         } else {
-            convertData &= (data & 0x0F);
+            convertData |= (byte)(data & 0x0F);
             buf.put(convertData);
         }
 
@@ -54,12 +54,12 @@ public class Convert4BitBuffer {
      * 获取还原数据
      * @return
      */
-    public byte getReplacementData() {
+    public byte decoding() {
         byte data;
 
         if(isReplacementAreaBufPointHighBit) {
             convertData = buf.get();
-            data = (byte)(convertData >> 4);
+            data = (byte)((convertData & 0xFF) >> 4);
         } else {
             data = (byte)(convertData & 0x0F);
         }
@@ -72,7 +72,12 @@ public class Convert4BitBuffer {
      * 获取转换结果
      * @return
      */
-    public byte[] getConvertResult() {
+    public byte[] getValues() {
+        // 如果高低标志在低位时,将最后一字节写入BUF
+        if(!isReplacementAreaBufPointHighBit) {
+            buf.put(convertData);
+        }
+
         int len = buf.position();
         buf.flip();
         byte[] data = new byte[len];

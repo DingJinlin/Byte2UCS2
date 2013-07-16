@@ -23,12 +23,14 @@ public abstract class UCS2Convert {
     final int GROUP_LEN = 32;
     final int GROUP_WORD_LEN = GROUP_LEN / 2;
 
-    // 一包所包含的组数
-    final int PACK_GROUP_COUNT = 16;
-    final int PACK_LEN = GROUP_LEN * PACK_GROUP_COUNT;
+    // 最大组数
+    final int MAX_GROUP_COUNT = 255;
 
-    // 替换区包Map
-    Map<Integer, Map<Integer, Set<Byte>>> packs = new HashMap<Integer, Map<Integer, Set<Byte>>>();
+    // 最大长度
+    final int MAX_DATA_LEN = MAX_GROUP_COUNT * GROUP_LEN;
+
+    // 替换组Map
+    Map<Integer, Set<Byte>> groups = new HashMap<Integer, Set<Byte>>();
 
     // 数据内容缓存
     byte[] dataBuf;
