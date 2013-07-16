@@ -1,133 +1,285 @@
 package com.raycom.support.byte2ucs2;
 
+import com.raycom.support.HexConvert;
+
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
  * User: server
  * Date: 13-7-15
  * Time: 下午1:21
- * To change this template use File | Settings | File Templates.
  */
-public class Byte2UCS2 {
-    // 填充字节
-    final byte FILL_BYTE = (byte)0xFF;
+public class Byte2UCS2 extends UCS2Convert {
+    // 实际数据长度
+    int dataLen;
 
-    // 替换时对待替换的字节进行与运算
-    final byte REP_BYTE = (byte)0x7F;
+    public Byte2UCS2(byte[] data) {
+        dataLen = data.length;
 
-    // 还原时对待替换的字节进行或运算
-    final byte REV_BYTE = (byte)0xD0;
-
-
-    final int GROUP_LEN = 32;
-    final int GROUP_WORD_LEN = GROUP_LEN / 2;
-
-    // 一包所包含的组数
-    final int PACK_GROUP_COUNT = 16;
-
-
-    byte[] byteData = new byte[0];
-    byte[] ucs2Data = new byte[0];
-
-    // 替换区Map
-    Map<Integer, Set<Byte>> replacementArea;
-
-    // 数据内容缓存
-    byte[] dataBuf;
-    /**
-     * 替换数据内容
-     * @return
-     */
-    public void replaceData() {
         // 数据内容缓存长度
-        int dataBufLen = (byteData.length + 1) / 2 * 2;
+        int dataBufLen = (data.length + 1) / 2 * 2;
 
         // 数据内容缓存
         dataBuf = new byte[dataBufLen];
         dataBuf[dataBufLen - 1] = FILL_BYTE;
 
-        System.arraycopy(byteData, 0, dataBuf, 0, byteData.length);
+        System.arraycopy(data, 0, dataBuf, 0, data.length);
+    }
 
+    /**
+     * 替换数据内容
+     * @return
+     */
+    private void replaceData() {
         // 计算组数
-        int groupCount = (dataBufLen + GROUP_LEN - 1) / GROUP_LEN;
+        int groupCount = (dataBuf.length + GROUP_LEN - 1) / GROUP_LEN;
 
         // 计算包数
         int packCount = (groupCount + PACK_GROUP_COUNT - 1) / PACK_GROUP_COUNT;
 
         // 将内容进行替换
-        for (int groupSeq = 0; groupSeq != groupCount; groupSeq++) {
-            Set<Byte> positionSet = new HashSet<Byte>();
-            for (int position = 0; position != GROUP_WORD_LEN; position++) {
-                int dataBufPosition = (groupSeq * GROUP_LEN) + (position * 2);
-                if (dataBuf[dataBufPosition] > 0xD7 && dataBuf[dataBufPosition] < 0xE0) {
-                    dataBuf[dataBufPosition] &= REP_BYTE;
+        for(int packSeq = 0; packSeq != packCount; packSeq++) {
+            // 替换区Map
+            Map<Integer, Set<Byte>> group = new HashMap<Integer, Set<Byte>>();
+            for (int groupSeq = 0; groupSeq != groupCount; groupSeq++) {
+                Set<Byte> positionSet = new HashSet<Byte>();
+                for (int position = 0; position != GROUP_WORD_LEN; position++) {
+                    int dataBufPosition = (packSeq * PACK_LEN) + (groupSeq * GROUP_LEN) + (position * 2);
+                    if (dataBuf[dataBufPosition] > 0xD7 && dataBuf[dataBufPosition] < 0xE0) {
+                        dataBuf[dataBufPosition] &= REP_BYTE;
 
-                    // 记录替换位置
-                    positionSet.add((byte)position);
+                        // 记录替换位置
+                        positionSet.add((byte)position);
+                    }
+                }
+
+                if(positionSet.size() != 0) {
+                    // 记录替换分组序号
+                    group.put(groupSeq, positionSet);
                 }
             }
-
-            if(positionSet.size() != 0) {
-                // 记录替换分组序号
-                replacementArea.put(groupSeq, positionSet);
-            }
+            packs.put(packSeq, group);
         }
     }
 
+
+
     /**
-     * 组包替换区内容
+     * 组包替换组内容
      * @return
      */
-    public byte[] createReplacementAreaBuf() {
-        byte head = 0x00;
-
-        // 替换区缓存
-        ByteBuffer replacementAreaBuf = ByteBuffer.allocate(256);
-        replacementAreaBuf.clear();
-
-        // 小于16组的最后一组序号
-        int lastGroupSeq = 0;
-        Set<Integer> groupSeqSet = replacementArea.keySet();
-        boolean firstGroup = true;
+    private Convert4BitBuffer createReplacementGroupBuf(Map<Integer, Set<Byte>> groups, Convert4BitBuffer convert4BitBuffer) {
+        Set<Integer> groupSeqSet = groups.keySet();
         for (int groupSeq : groupSeqSet) {
-            // 记录总组数
-            putReplacementData(replacementAreaBuf, (byte)groupSeqSet.size());
-
             // 记录当前组序号
-            putReplacementData(replacementAreaBuf, (byte)groupSeq);
+            convert4BitBuffer.putReplacementData((byte) groupSeq);
 
-            Set<Byte> positionSet =  replacementArea.get(groupSeq);
-            // 记录替换的位数
-            putReplacementData(replacementAreaBuf, (byte)positionSet.size());
+            // 记录替换数
+            Set<Byte> positionSet =  groups.get(groupSeq);
+            convert4BitBuffer.putReplacementData((byte) positionSet.size());
 
             // 记录替换位置
             for(byte position : positionSet) {
-                putReplacementData(replacementAreaBuf, position);
+                convert4BitBuffer.putReplacementData(position);
             }
         }
 
-        int len = replacementAreaBuf.position();
-        byte[] replacementArea = new byte[len];
-        replacementAreaBuf.flip();
-        replacementAreaBuf.get(replacementArea);
-
-        return replacementArea;
+        return convert4BitBuffer;
     }
 
-    // 现需要填充是高位还是低位
-    boolean isReplacementAreaBufPointHighBit = true;
-    byte putData;
-    private void putReplacementData(ByteBuffer buf, byte data) {
-        if(isReplacementAreaBufPointHighBit) {
-            putData = (byte)0x00;
-            putData &= (data << 4);
-        } else {
-            putData &= (data & 0x0F);
-            buf.put(putData);
+    /**
+     * 组包替换包内容
+     * @param packs
+     * @return
+     */
+    private Convert4BitBuffer createReplacementPackBuf(Map<Integer, Map<Integer, Set<Byte>>> packs, Convert4BitBuffer convert4BitBuffer) {
+        // 记录包含的包数
+        convert4BitBuffer.putReplacementData((byte) packs.size());
+
+        Set<Integer> packSeqSet = packs.keySet();
+
+        for (int packSeq : packSeqSet) {
+            // 记录当前包序号
+            convert4BitBuffer.putReplacementData((byte) packSeq);
+
+            // 记录包含包数
+            Map<Integer, Set<Byte>> groups =  packs.get(packSeq);
+            convert4BitBuffer.putReplacementData((byte) groups.size());
+
+            // 组包包内容
+            convert4BitBuffer = createReplacementGroupBuf(groups, convert4BitBuffer);
         }
+
+        return convert4BitBuffer;
     }
+
+    @Override
+    public byte[] convert() {
+        replaceData();
+
+        // 替换区
+        Convert4BitBuffer convertBuf = new Convert4BitBuffer();
+        convertBuf = createReplacementPackBuf(packs, convertBuf);
+        byte[] replacementArea = convertBuf.getConvertResult();
+
+        // 将替换区长度变为2的倍数
+        int len = (replacementArea.length + 1) / 2 * 2;
+        byte[] replacementAreaBuf = new byte[len];
+        replacementAreaBuf[len - 1] = FILL_BYTE;
+        System.arraycopy(replacementArea, 0, replacementAreaBuf, 0, replacementAreaBuf.length);
+
+        // 组包内容
+        ByteBuffer buf = ByteBuffer.allocate(2 + replacementAreaBuf.length + dataLen);
+        buf.clear();
+        buf.order(ByteOrder.BIG_ENDIAN);
+        buf.putShort((short)dataLen);
+        buf.put(replacementAreaBuf);
+        buf.put(dataBuf);
+
+        return buf.array();
+    }
+
+    public static void main(String[] args) {
+        byte[] inData = { // 1024
+            (byte) 0x78, (byte) 0xD1, (byte) 0x55, (byte) 0x53, (byte) 0x25, (byte) 0x0C, (byte) 0x84, (byte) 0xA7,
+            (byte) 0x53, (byte) 0x8C, (byte) 0x76, (byte) 0x88, (byte) 0xCE, (byte) 0x8F, (byte) 0x71, (byte) 0x1B,
+            (byte) 0x9D, (byte) 0xD2, (byte) 0xA5, (byte) 0x9B, (byte) 0x6E, (byte) 0xD6, (byte) 0x07, (byte) 0x05,
+            (byte) 0x9F, (byte) 0x5C, (byte) 0xB1, (byte) 0x47, (byte) 0x06, (byte) 0xD2, (byte) 0x9E, (byte) 0x89,
+            (byte) 0x3B, (byte) 0xFD, (byte) 0x54, (byte) 0x0E, (byte) 0xC3, (byte) 0x3A, (byte) 0xA2, (byte) 0xFE,
+            (byte) 0xB2, (byte) 0xC3, (byte) 0xD3, (byte) 0x2C, (byte) 0xF1, (byte) 0x78, (byte) 0xA3, (byte) 0xC1,
+            (byte) 0xEE, (byte) 0xD3, (byte) 0xC6, (byte) 0x0E, (byte) 0x55, (byte) 0x1D, (byte) 0xCF, (byte) 0x64,
+            (byte) 0xD6, (byte) 0x66, (byte) 0x3A, (byte) 0x43, (byte) 0xB7, (byte) 0x82, (byte) 0x18, (byte) 0xDD,
+            (byte) 0xC5, (byte) 0x62, (byte) 0xBC, (byte) 0xA7, (byte) 0x49, (byte) 0xCE, (byte) 0xA6, (byte) 0xB2,
+            (byte) 0xE9, (byte) 0xD7, (byte) 0x70, (byte) 0x41, (byte) 0xC2, (byte) 0xCA, (byte) 0x26, (byte) 0xD9,
+            (byte) 0x04, (byte) 0xD7, (byte) 0x2E, (byte) 0x78, (byte) 0x84, (byte) 0xC3, (byte) 0x1D, (byte) 0x64,
+            (byte) 0xFF, (byte) 0x88, (byte) 0x79, (byte) 0x61, (byte) 0xE5, (byte) 0xC8, (byte) 0x0D, (byte) 0x1D,
+            (byte) 0x5B, (byte) 0x63, (byte) 0x41, (byte) 0xAC, (byte) 0x5E, (byte) 0x9D, (byte) 0x29, (byte) 0x90,
+            (byte) 0x35, (byte) 0xC3, (byte) 0x45, (byte) 0x82, (byte) 0xDA, (byte) 0x07, (byte) 0x82, (byte) 0x5A,
+            (byte) 0xB3, (byte) 0x2A, (byte) 0x76, (byte) 0x59, (byte) 0x60, (byte) 0x47, (byte) 0xAB, (byte) 0xFC,
+            (byte) 0x37, (byte) 0xD0, (byte) 0x29, (byte) 0x29, (byte) 0x1F, (byte) 0x09, (byte) 0x95, (byte) 0xD5,
+            (byte) 0xA2, (byte) 0x8C, (byte) 0x98, (byte) 0x6C, (byte) 0xCF, (byte) 0x25, (byte) 0x9F, (byte) 0xCC,
+            (byte) 0xE3, (byte) 0x09, (byte) 0x80, (byte) 0x4E, (byte) 0x4B, (byte) 0x7D, (byte) 0x48, (byte) 0x3B,
+            (byte) 0xF0, (byte) 0x15, (byte) 0x48, (byte) 0x0C, (byte) 0x28, (byte) 0x8E, (byte) 0x2A, (byte) 0xCA,
+            (byte) 0x32, (byte) 0xF9, (byte) 0x4A, (byte) 0xB7, (byte) 0xCF, (byte) 0x80, (byte) 0xDF, (byte) 0x49,
+            (byte) 0x0C, (byte) 0x73, (byte) 0xF5, (byte) 0xF0, (byte) 0xA1, (byte) 0x71, (byte) 0xF1, (byte) 0xFB,
+            (byte) 0x21, (byte) 0xA0, (byte) 0x6F, (byte) 0x8C, (byte) 0xCA, (byte) 0x0B, (byte) 0x99, (byte) 0xF9,
+            (byte) 0xC6, (byte) 0x1A, (byte) 0x38, (byte) 0x10, (byte) 0x66, (byte) 0x1F, (byte) 0x2B, (byte) 0xEA,
+            (byte) 0xEC, (byte) 0xDB, (byte) 0x28, (byte) 0x39, (byte) 0x21, (byte) 0xC8, (byte) 0x54, (byte) 0x84,
+            (byte) 0x71, (byte) 0x97, (byte) 0xB9, (byte) 0x58, (byte) 0x98, (byte) 0x6C, (byte) 0xD2, (byte) 0x16,
+            (byte) 0xCE, (byte) 0x47, (byte) 0x09, (byte) 0x3E, (byte) 0x71, (byte) 0x5C, (byte) 0xBA, (byte) 0x7B,
+            (byte) 0x5E, (byte) 0x7F, (byte) 0x1E, (byte) 0xAD, (byte) 0xFB, (byte) 0x78, (byte) 0x76, (byte) 0xF0,
+            (byte) 0x09, (byte) 0x99, (byte) 0x3E, (byte) 0x22, (byte) 0x0F, (byte) 0x01, (byte) 0x5F, (byte) 0x2D,
+            (byte) 0x9C, (byte) 0x64, (byte) 0x3B, (byte) 0xC2, (byte) 0x34, (byte) 0x38, (byte) 0xF1, (byte) 0xFD,
+            (byte) 0x84, (byte) 0x5E, (byte) 0x4E, (byte) 0xF0, (byte) 0xEE, (byte) 0x93, (byte) 0x30, (byte) 0xEC,
+            (byte) 0x69, (byte) 0x48, (byte) 0xD1, (byte) 0xD5, (byte) 0xE6, (byte) 0xB8, (byte) 0xDE, (byte) 0x6A,
+            (byte) 0xCD, (byte) 0x1C, (byte) 0xE7, (byte) 0x66, (byte) 0x69, (byte) 0x64, (byte) 0x15, (byte) 0x8E,
+            (byte) 0x49, (byte) 0x54, (byte) 0x01, (byte) 0x58, (byte) 0x46, (byte) 0x02, (byte) 0x27, (byte) 0xD1,
+            (byte) 0x55, (byte) 0xBD, (byte) 0x4B, (byte) 0x62, (byte) 0x02, (byte) 0x6B, (byte) 0x58, (byte) 0x4E,
+            (byte) 0xDE, (byte) 0x17, (byte) 0xF3, (byte) 0x61, (byte) 0x54, (byte) 0x44, (byte) 0x14, (byte) 0xBE,
+            (byte) 0x95, (byte) 0x9B, (byte) 0xAC, (byte) 0x38, (byte) 0x24, (byte) 0xDB, (byte) 0x05, (byte) 0xB6,
+            (byte) 0xE3, (byte) 0x41, (byte) 0xFC, (byte) 0x2F, (byte) 0xD4, (byte) 0x1B, (byte) 0xB6, (byte) 0xEF,
+            (byte) 0x2A, (byte) 0xB6, (byte) 0xFF, (byte) 0x97, (byte) 0x2C, (byte) 0x4A, (byte) 0xA4, (byte) 0xEB,
+            (byte) 0x24, (byte) 0x2F, (byte) 0xDF, (byte) 0x91, (byte) 0x05, (byte) 0xAC, (byte) 0xBC, (byte) 0x2C,
+            (byte) 0xDD, (byte) 0xAE, (byte) 0x16, (byte) 0xDA, (byte) 0xD7, (byte) 0x6F, (byte) 0x43, (byte) 0x04,
+            (byte) 0x94, (byte) 0xD5, (byte) 0x7E, (byte) 0x9B, (byte) 0x4F, (byte) 0xA2, (byte) 0x9A, (byte) 0xDA,
+            (byte) 0x25, (byte) 0xD5, (byte) 0xAB, (byte) 0xCB, (byte) 0x92, (byte) 0x3B, (byte) 0x2F, (byte) 0x34,
+            (byte) 0xF5, (byte) 0x57, (byte) 0xF2, (byte) 0xDE, (byte) 0x15, (byte) 0xB8, (byte) 0x99, (byte) 0xCE,
+            (byte) 0xD6, (byte) 0xB8, (byte) 0x7F, (byte) 0x5A, (byte) 0x22, (byte) 0xE5, (byte) 0x3B, (byte) 0x6D,
+            (byte) 0x7C, (byte) 0xC9, (byte) 0xA9, (byte) 0x66, (byte) 0x72, (byte) 0x87, (byte) 0x3E, (byte) 0xAD,
+            (byte) 0xF2, (byte) 0x1F, (byte) 0xAA, (byte) 0x95, (byte) 0xEC, (byte) 0x5A, (byte) 0x88, (byte) 0x33,
+            (byte) 0xE8, (byte) 0xB7, (byte) 0x69, (byte) 0x7D, (byte) 0x90, (byte) 0x9E, (byte) 0x66, (byte) 0x85,
+            (byte) 0x7B, (byte) 0x1E, (byte) 0x08, (byte) 0xE7, (byte) 0xAC, (byte) 0xB0, (byte) 0x24, (byte) 0xEE,
+            (byte) 0x2E, (byte) 0xA4, (byte) 0x77, (byte) 0xC7, (byte) 0xF5, (byte) 0x3A, (byte) 0x58, (byte) 0x9C,
+            (byte) 0xD6, (byte) 0x83, (byte) 0x15, (byte) 0x7C, (byte) 0xDD, (byte) 0x8F, (byte) 0x73, (byte) 0x5E,
+            (byte) 0xBB, (byte) 0x13, (byte) 0xCF, (byte) 0x68, (byte) 0x38, (byte) 0xE4, (byte) 0xB7, (byte) 0x9D,
+            (byte) 0xF7, (byte) 0x7A, (byte) 0xB5, (byte) 0xAE, (byte) 0xCE, (byte) 0x01, (byte) 0xC3, (byte) 0x2E,
+            (byte) 0xB8, (byte) 0xF3, (byte) 0x25, (byte) 0xA6, (byte) 0x6B, (byte) 0xF3, (byte) 0xDF, (byte) 0x83,
+            (byte) 0xCD, (byte) 0x9D, (byte) 0x19, (byte) 0x67, (byte) 0x87, (byte) 0x4C, (byte) 0x5A, (byte) 0xA8,
+            (byte) 0xEC, (byte) 0x6C, (byte) 0x53, (byte) 0xBD, (byte) 0x60, (byte) 0x0F, (byte) 0x5A, (byte) 0x4E,
+            (byte) 0x95, (byte) 0x52, (byte) 0x49, (byte) 0x89, (byte) 0x52, (byte) 0xA4, (byte) 0xB4, (byte) 0xF4,
+            (byte) 0xF6, (byte) 0xBB, (byte) 0x2D, (byte) 0xDB, (byte) 0xD6, (byte) 0xB7, (byte) 0xD9, (byte) 0xF9,
+            (byte) 0x46, (byte) 0x7E, (byte) 0x40, (byte) 0x7A, (byte) 0x75, (byte) 0xF5, (byte) 0x1C, (byte) 0x47,
+            (byte) 0x61, (byte) 0xD8, (byte) 0x75, (byte) 0xA3, (byte) 0x56, (byte) 0xE5, (byte) 0x02, (byte) 0x51,
+            (byte) 0x6E, (byte) 0x8F, (byte) 0x03, (byte) 0xE1, (byte) 0xD9, (byte) 0x39, (byte) 0x7B, (byte) 0x3F,
+            (byte) 0x1C, (byte) 0x19, (byte) 0x3B, (byte) 0x2C, (byte) 0x30, (byte) 0xAC, (byte) 0xE2, (byte) 0x57,
+            (byte) 0xC1, (byte) 0xCF, (byte) 0x7B, (byte) 0x1D, (byte) 0x4F, (byte) 0x82, (byte) 0x67, (byte) 0xA6,
+            (byte) 0xBE, (byte) 0x7C, (byte) 0xBD, (byte) 0x54, (byte) 0xD4, (byte) 0xB7, (byte) 0x02, (byte) 0xBC,
+            (byte) 0xB5, (byte) 0x80, (byte) 0xDF, (byte) 0x66, (byte) 0x41, (byte) 0x6D, (byte) 0x93, (byte) 0x55,
+            (byte) 0x3E, (byte) 0x59, (byte) 0xDA, (byte) 0xCE, (byte) 0xEB, (byte) 0xA9, (byte) 0xB9, (byte) 0x50,
+            (byte) 0xB4, (byte) 0xE4, (byte) 0x77, (byte) 0xC4, (byte) 0x35, (byte) 0x37, (byte) 0xFF, (byte) 0x4F,
+            (byte) 0x35, (byte) 0xEC, (byte) 0xFA, (byte) 0xE7, (byte) 0xEE, (byte) 0xF1, (byte) 0x20, (byte) 0x26,
+            (byte) 0xC6, (byte) 0xF6, (byte) 0x42, (byte) 0xDF, (byte) 0xFE, (byte) 0xFF, (byte) 0x0C, (byte) 0x4F,
+            (byte) 0xEB, (byte) 0xDB, (byte) 0x83, (byte) 0x6B, (byte) 0x7B, (byte) 0x33, (byte) 0x5B, (byte) 0x23,
+            (byte) 0x1B, (byte) 0x7A, (byte) 0xF3, (byte) 0x53, (byte) 0x13, (byte) 0xA7, (byte) 0xF7, (byte) 0xED,
+            (byte) 0x1F, (byte) 0xC9, (byte) 0x73, (byte) 0x17, (byte) 0xFA, (byte) 0xB5, (byte) 0x79, (byte) 0xB1,
+            (byte) 0xB7, (byte) 0xF9, (byte) 0x2E, (byte) 0x07, (byte) 0xFF, (byte) 0x05, (byte) 0xEF, (byte) 0xC9,
+            (byte) 0x18, (byte) 0x98, (byte) 0x1C, (byte) 0x59, (byte) 0xFF, (byte) 0x92, (byte) 0xF8, (byte) 0x53,
+            (byte) 0xF5, (byte) 0xA5, (byte) 0x79, (byte) 0xAD, (byte) 0xAD, (byte) 0xB1, (byte) 0xC5, (byte) 0x79,
+            (byte) 0xC5, (byte) 0x99, (byte) 0xB1, (byte) 0xAF, (byte) 0xF9, (byte) 0x30, (byte) 0x72, (byte) 0x8F,
+            (byte) 0xAD, (byte) 0x4E, (byte) 0x4E, (byte) 0x3F, (byte) 0xDE, (byte) 0xB7, (byte) 0xB6, (byte) 0x3A,
+            (byte) 0xBB, (byte) 0x7F, (byte) 0x26, (byte) 0x0C, (byte) 0x3D, (byte) 0xF8, (byte) 0x30, (byte) 0x7E,
+            (byte) 0x60, (byte) 0xB1, (byte) 0xB3, (byte) 0x7F, (byte) 0x28, (byte) 0xFE, (byte) 0x21, (byte) 0xFE,
+            (byte) 0x4B, (byte) 0xDF, (byte) 0xFD, (byte) 0x9D, (byte) 0x03, (byte) 0x28, (byte) 0xFF, (byte) 0xB5,
+            (byte) 0x7E, (byte) 0x5E, (byte) 0x61, (byte) 0x5E, (byte) 0x6D, (byte) 0x71, (byte) 0x62, (byte) 0x6F,
+            (byte) 0xFE, (byte) 0x4C, (byte) 0x18, (byte) 0xAB, (byte) 0xEB, (byte) 0x67, (byte) 0xFD, (byte) 0x80,
+            (byte) 0x34, (byte) 0xC7, (byte) 0xFF, (byte) 0xD3, (byte) 0x08, (byte) 0x71, (byte) 0x5E, (byte) 0xFF,
+            (byte) 0x0C, (byte) 0x62, (byte) 0x71, (byte) 0xFE, (byte) 0x4C, (byte) 0x48, (byte) 0x8F, (byte) 0xF0,
+            (byte) 0xFC, (byte) 0x83, (byte) 0xEE, (byte) 0xCF, (byte) 0xD8, (byte) 0x18, (byte) 0xBF, (byte) 0x47,
+            (byte) 0x3F, (byte) 0xD9, (byte) 0x7E, (byte) 0x31, (byte) 0x1D, (byte) 0xFC, (byte) 0x1C, (byte) 0x18,
+            (byte) 0x3F, (byte) 0xDC, (byte) 0x62, (byte) 0xFF, (byte) 0xFC, (byte) 0x35, (byte) 0x6E, (byte) 0x0E,
+            (byte) 0x4D, (byte) 0xAD, (byte) 0xBF, (byte) 0xDD, (byte) 0xB8, (byte) 0xFE, (byte) 0x3F, (byte) 0xDF,
+            (byte) 0xF9, (byte) 0xBE, (byte) 0x7E, (byte) 0x35, (byte) 0xFF, (byte) 0x29, (byte) 0x65, (byte) 0xFE,
+            (byte) 0xA1, (byte) 0x0C, (byte) 0x97, (byte) 0xFA, (byte) 0xEF, (byte) 0x6C, (byte) 0x2E, (byte) 0xCD,
+            (byte) 0x7F, (byte) 0x92, (byte) 0xB3, (byte) 0x30, (byte) 0x16, (byte) 0xFE, (byte) 0xF9, (byte) 0x52,
+            (byte) 0x16, (byte) 0x2E, (byte) 0x78, (byte) 0x7E, (byte) 0x0A, (byte) 0x5F, (byte) 0x77, (byte) 0x0F,
+            (byte) 0xD5, (byte) 0x0D, (byte) 0xBF, (byte) 0x1C, (byte) 0xB4, (byte) 0xFF, (byte) 0x85, (byte) 0x31,
+            (byte) 0x35, (byte) 0xB8, (byte) 0x31, (byte) 0x16, (byte) 0x38, (byte) 0xBA, (byte) 0xB8, (byte) 0xE9,
+            (byte) 0xAC, (byte) 0x34, (byte) 0x38, (byte) 0x68, (byte) 0xDF, (byte) 0x37, (byte) 0xF8, (byte) 0xDA,
+            (byte) 0x78, (byte) 0x0A, (byte) 0x7A, (byte) 0x94, (byte) 0xA7, (byte) 0x88, (byte) 0x54, (byte) 0xAE,
+            (byte) 0x16, (byte) 0x6D, (byte) 0x8D, (byte) 0x3D, (byte) 0xB6, (byte) 0xB7, (byte) 0xEA, (byte) 0x6C,
+            (byte) 0xB1, (byte) 0x95, (byte) 0x71, (byte) 0x65, (byte) 0x31, (byte) 0xC1, (byte) 0x88, (byte) 0xCA,
+            (byte) 0xDC, (byte) 0x1A, (byte) 0x1A, (byte) 0x02, (byte) 0x08, (byte) 0x2B, (byte) 0xE8, (byte) 0xA9,
+            (byte) 0x61, (byte) 0xC0, (byte) 0x96, (byte) 0x82, (byte) 0xE7, (byte) 0xC6, (byte) 0x5C, (byte) 0xFC,
+            (byte) 0x0E, (byte) 0x16, (byte) 0x7B, (byte) 0x8F, (byte) 0xA0, (byte) 0x68, (byte) 0xC7, (byte) 0xA9,
+            (byte) 0xF6, (byte) 0x5D, (byte) 0xA2, (byte) 0x59, (byte) 0x79, (byte) 0x96, (byte) 0xA2, (byte) 0x41,
+            (byte) 0x78, (byte) 0x5D, (byte) 0x1D, (byte) 0x1B, (byte) 0x3D, (byte) 0x1B, (byte) 0xDC, (byte) 0x75,
+            (byte) 0x42, (byte) 0x3A, (byte) 0xBD, (byte) 0xA3, (byte) 0x1C, (byte) 0x3B, (byte) 0x4D, (byte) 0xF3,
+            (byte) 0x97, (byte) 0x52, (byte) 0xCB, (byte) 0x74, (byte) 0x7F, (byte) 0x2A, (byte) 0x1D, (byte) 0x43,
+            (byte) 0x59, (byte) 0x7F, (byte) 0x0A, (byte) 0x12, (byte) 0x89, (byte) 0xCC, (byte) 0x14, (byte) 0x0B,
+            (byte) 0x4E, (byte) 0x13, (byte) 0xD4, (byte) 0xCB, (byte) 0xAB, (byte) 0x6C, (byte) 0x19, (byte) 0xB8,
+            (byte) 0xCC, (byte) 0xB3, (byte) 0xFB, (byte) 0x47, (byte) 0x8F, (byte) 0x2F, (byte) 0x0E, (byte) 0x95,
+            (byte) 0x45, (byte) 0xCD, (byte) 0x0C, (byte) 0xAE, (byte) 0x9E, (byte) 0x3E, (byte) 0x2C, (byte) 0x53,
+            (byte) 0xDE, (byte) 0x4E, (byte) 0xBE, (byte) 0xFF, (byte) 0x8E, (byte) 0xD3, (byte) 0x57, (byte) 0x73,
+            (byte) 0x15, (byte) 0x77, (byte) 0x91, (byte) 0xBD, (byte) 0x82, (byte) 0xC4, (byte) 0x9C, (byte) 0xC7,
+            (byte) 0xB3, (byte) 0xA3, (byte) 0x61, (byte) 0xE0, (byte) 0xCB, (byte) 0xC4, (byte) 0xBB, (byte) 0xD4,
+            (byte) 0xFF, (byte) 0xCC, (byte) 0x9A, (byte) 0xB2, (byte) 0x99, (byte) 0x79, (byte) 0x72, (byte) 0xE3,
+            (byte) 0x2E, (byte) 0x97, (byte) 0x78, (byte) 0x62, (byte) 0xDC, (byte) 0x63, (byte) 0x27, (byte) 0x0B,
+            (byte) 0x07, (byte) 0x9E, (byte) 0x4D, (byte) 0xE9, (byte) 0xC9, (byte) 0xC7, (byte) 0xF1, (byte) 0x71,
+            (byte) 0x30, (byte) 0x78, (byte) 0xB1, (byte) 0x9F, (byte) 0x8A, (byte) 0xF5, (byte) 0x3D, (byte) 0x33,
+            (byte) 0xC9, (byte) 0x62, (byte) 0x7C, (byte) 0xF2, (byte) 0x7A, (byte) 0x34, (byte) 0xC1, (byte) 0x5E,
+            (byte) 0x7E, (byte) 0x41, (byte) 0xB6, (byte) 0x9B, (byte) 0xB0, (byte) 0xD3, (byte) 0x4A, (byte) 0xFB,
+            (byte) 0xC8, (byte) 0x19, (byte) 0xA2, (byte) 0x38, (byte) 0x9D, (byte) 0x1E, (byte) 0xC4, (byte) 0xBF,
+            (byte) 0x78, (byte) 0x6B, (byte) 0xA4, (byte) 0xD8, (byte) 0x6A, (byte) 0xF1, (byte) 0xA1, (byte) 0x86,
+            (byte) 0x2D, (byte) 0xDA, (byte) 0x9D, (byte) 0xFA, (byte) 0x06, (byte) 0x51, (byte) 0xB3, (byte) 0x35,
+            (byte) 0x35, (byte) 0x1D, (byte) 0x37, (byte) 0xA6, (byte) 0xAE, (byte) 0xFA, (byte) 0xEA, (byte) 0xAC,
+            (byte) 0xA8, (byte) 0xC3, (byte) 0xBE, (byte) 0x45, (byte) 0x56, (byte) 0x42, (byte) 0x41, (byte) 0x96,
+            (byte) 0x1D, (byte) 0x1D, (byte) 0x0A, (byte) 0x79, (byte) 0xCD, (byte) 0x4A, (byte) 0x4C, (byte) 0xCD,
+            (byte) 0x23, (byte) 0xB8, (byte) 0xD9, (byte) 0xB9, (byte) 0x23, (byte) 0x1E, (byte) 0xB2, (byte) 0x4C,
+            (byte) 0xD1, (byte) 0xCA, (byte) 0x78, (byte) 0x58, (byte) 0x3D, (byte) 0xE4, (byte) 0xB2, (byte) 0x77,
+            (byte) 0xD2, (byte) 0x30, (byte) 0xD5, (byte) 0x44, (byte) 0x61, (byte) 0x54, (byte) 0x6D, (byte) 0x09,
+            (byte) 0x26, (byte) 0xAF, (byte) 0xA0, (byte) 0x86, (byte) 0xB6, (byte) 0xBB, (byte) 0xE3, (byte) 0x46,
+            (byte) 0xD3, (byte) 0x98, (byte) 0x35, (byte) 0xCC, (byte) 0x02, (byte) 0x3C, (byte) 0xA7, (byte) 0xC2
+        } ;
+
+        Byte2UCS2 byte2UCS2 = new Byte2UCS2(inData);
+        byte[] outData = byte2UCS2.convert();
+        System.out.println("In data: " + HexConvert.byte2String(inData));
+        System.out.println("Out data: " + HexConvert.byte2String(outData));
+    }
+
 }
