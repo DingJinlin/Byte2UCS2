@@ -9,20 +9,15 @@ import java.nio.ByteBuffer;
  */
 public class Convert7Bit {
     byte convertByte;
-    byte[] data;
 
-    /**
-     * @param data
-     */
-    public Convert7Bit(byte[] data) {
-        this.data = data;
+    public Convert7Bit() {
         convertByte = 0x00;
     }
 
     /**
      * 填充转换区
      */
-    public byte[] coding() {
+    public byte[] coding(byte[] data) {
         int bufLen = data.length + (data.length + 6 ) / 7 ;
         ByteBuffer buf = ByteBuffer.allocate(bufLen);
 
@@ -50,24 +45,23 @@ public class Convert7Bit {
      * 获取还原数据
      * @return
      */
-    public byte[] decoding() {
+    public byte[] decoding(byte[] data) {
         int bufLen = data.length - (data.length + 7 ) / 8 ;
         ByteBuffer buf = ByteBuffer.allocate(bufLen);
 
         for(int i = 0; i != data.length; i++) {
-            if(i % 8 != 7 && i != data.length - 1) {
-                convertByte = data[i + 1];
-            } else {
+            if((i + 1) % 8 == 0 || i + 1 == data.length) {
                 continue;
+            } else {
+                convertByte = data[i + 1];
+                int left = (i % 8) + 1;
+                int right = 7 - left;
+
+                byte value = (byte)((data[i] & 0xFF) << left);
+                convertByte = (byte)((data[i] & 0xFF) >> right);
+                value |= convertByte;
+                buf.put(value);
             }
-
-            int left = (i % 8) + 1;
-            int right = 7 - left;
-
-            byte value = (byte)((data[i] & 0xFF) << left);
-            convertByte = (byte)((data[i] & 0xFF) >> right);
-            value |= convertByte;
-            buf.put(value);
         }
 
         return buf.array();

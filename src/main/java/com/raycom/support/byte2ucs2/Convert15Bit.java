@@ -10,43 +10,44 @@ import java.nio.ByteOrder;
  */
 public class Convert15Bit {
     short convertData;
-    byte[] data;
+    short currentData;
 
-    /**
-     * @param data
-     */
-    public Convert15Bit(byte[] data) {
-        if(data.length % 2 != 0) {
-            this.data = new byte[data.length + 1];
-            this.data[data.length] = 0x00;
-            System.arraycopy(data, 0, this.data, 0, data.length);
-        }
-        this.data = data;
+    public Convert15Bit() {
         convertData = 0x00;
     }
 
     /**
      * 编码
      */
-    public byte[] coding() {
-        int bufLen = data.length + (data.length + 29 ) / 30 * 2 ;
+    public byte[] coding(byte[] data) {
+        byte[] inData;
+        // 处理奇数字节
+        if(data.length % 2 != 0) {
+            inData = new byte[data.length + 1];
+            inData[inData.length -1] = 0x00;
+            System.arraycopy(data, 0, inData, 0, data.length);
+        } else {
+            inData = data;
+        }
+
+        int bufLen = inData.length + (inData.length + 29 ) / 30 * 2 ;
         ByteBuffer buf = ByteBuffer.allocate(bufLen);
 
-        ByteBuffer inDataBuf = ByteBuffer.wrap(data);
+        ByteBuffer inDataBuf = ByteBuffer.wrap(inData);
         inDataBuf.clear();
         inDataBuf.order(ByteOrder.BIG_ENDIAN);
 
-        for(int i = 0; i != data.length / 2; i++) {
-            int right = (i % 15) + 1;
-            int left = 15 - right;
-
-            short value = (short)((data[i] & 0xFFFF) >> right);
+        for(int i = 0; i != inData.length / 2; i++) {
+            short convertBit = BitTable.getShortBit(14 - (i % 15));
+            currentData = inDataBuf.getShort();
+            short value = (short)(currentData & convertBit);
             value |= convertData;
             buf.putShort(value);
 
-            convertData = (short)((data[i]<< left) & 0x7FFF);
+            convertData = (short)(currentData & (~convertBit));
+            convertData = (short)((convertData & 0xFFFF) >> 1);
 
-            if(i % 15 == 14 || i == data.length / 2 - 1) {
+            if(i % 15 == 14 || i == inData.length / 2 - 1) {
                 buf.putShort(convertData);
                 convertData = 0x0000;
             }
@@ -60,43 +61,31 @@ public class Convert15Bit {
      * 获取还原数据
      * @return
      */
-    public byte[] decoding() {
-        int bufLen = data.length - (data.length + 29 ) / 30 * 2 ;
+    public byte[] decoding(byte[] data) {
+        int bufLen = data.length - (data.length + 31) / 32 * 2;
         ByteBuffer buf = ByteBuffer.allocate(bufLen);
 
         ByteBuffer inDataBuf = ByteBuffer.wrap(data);
         for(int i = 0; i != data.length / 2; i++) {
-            short currentData = inDataBuf.getShort();
-            convertData = inDataBuf.getShort();
-            inDataBuf.position(inDataBuf.position() - 2);
-
-            int left = (i % 15) + 1;
-            int right = 15 - left;
-
-            short value = (byte)((currentData & 0xFFFF) << left);
-            convertData = (byte)((convertData & 0xFFFF) >> right);
-            value |= convertData;
-            buf.putShort(value);
-        }
-
-        /*for(int i = 0; i != data.length / 2; i++) {
-            short currentData = inDataBuf.getShort();
-            if(i % 15 != 14 && i != data.length / 2 - 1) {
+            if(i % 16 == 15 || i == data.length / 2 - 1) {
+                currentData = inDataBuf.getShort();
+                continue;
+            } else {
+                currentData = inDataBuf.getShort();
                 convertData = inDataBuf.getShort();
                 inDataBuf.position(inDataBuf.position() - 2);
-            } else {
-                continue;
+
+                short convertBit = BitTable.getShortBit(14 - (i % 16));
+                currentData &= convertBit;
+                convertBit = BitTable.getShortBit(13 - (i % 16));
+
+                convertData = (short)(convertData & (~convertBit));
+                convertData = (short)(convertData << 1);
+
+                short value = (short)(currentData |convertData);
+                buf.putShort(value);
             }
-
-            int left = (i % 16) + 1;
-            int right = 15 - left;
-
-            short value = (byte)((currentData & 0xFFFF) << left);
-            convertData = (byte)((convertData & 0xFFFF) >> right);
-            value |= convertData;
-            buf.putShort(value);
-        }*/
-
+        }
         return buf.array();
     }
 }
