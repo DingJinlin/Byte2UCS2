@@ -2,19 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8fc94e26-da98-4c28-8f99-55040aaa653d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Bytes2UCS2.java" afterPath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Bytes2UCS2.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert15Bit.java" afterPath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert15Bit.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert7Bit.java" afterPath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert7Bit.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestConvert15Bit.java" afterPath="$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestConvert15Bit.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/UCS22Bytes.java" afterPath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/UCS22Bytes.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="E:\workspace\IDEAProjects\Byte2UCS2\src\test\java\com\raycom\support\byte2ucs2\testUCS2Convert.java" afterPath="$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestUCS2Convert.java" />
     </list>
     <ignored path="Byte2UCS2.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Byte2UCS2.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1373953886781" ignored="false" />
     <file path="/pom.xml" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1373867188437" ignored="false" />
-    <file path="/Dummy.txt" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374048252765" ignored="false" />
+    <file path="/Dummy.txt" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374048296625" ignored="false" />
     <file path="/fragment.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374044248265" ignored="false" />
     <file path="/*.regexp" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1373939491953" ignored="false" />
     <file path="/Create4BitBuf.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1373941965937" ignored="false" />
@@ -85,21 +79,6 @@
       </breakpoint>
     </breakpoint_any>
     <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Bytes2UCS2.java" line="261" class="com.raycom.support.byte2ucs2.Bytes2UCS2" package="com.raycom.support.byte2ucs2">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="&#13;&#13;JAVA" />
-        <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
-      </breakpoint>
       <breakpoint url="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/UCS22Bytes.java" line="75" class="com.raycom.support.byte2ucs2.UCS22Bytes" package="com.raycom.support.byte2ucs2">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
@@ -168,7 +147,7 @@
       <file leaf-file-name="Bytes2UCS2.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Bytes2UCS2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="264" column="13" selection-start="18730" selection-end="18730" vertical-scroll-proportion="0.5206422">
+            <state line="267" column="46" selection-start="18766" selection-end="18766" vertical-scroll-proportion="1.9587156">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1027#1033#0" expanded="true" />
@@ -780,7 +759,11 @@
       <created>1374047235218</created>
       <updated>1374047235218</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="UCS2Convert编码码编写完成.">
+      <created>1374048299765</created>
+      <updated>1374048299765</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -805,7 +788,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-4" width="1448" height="878" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -815,7 +798,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42461964" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918397" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918397" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -1013,7 +996,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Bytes2UCS2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="264" column="13" selection-start="18730" selection-end="18730" vertical-scroll-proportion="0.5206422">
+        <state line="267" column="46" selection-start="18766" selection-end="18766" vertical-scroll-proportion="1.9587156">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1027#1033#0" expanded="true" />
