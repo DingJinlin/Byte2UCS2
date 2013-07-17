@@ -2,18 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8fc94e26-da98-4c28-8f99-55040aaa653d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/BitTable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Bytes2UCS2.java" afterPath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Bytes2UCS2.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert15Bit.java" afterPath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert15Bit.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert7Bit.java" afterPath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert7Bit.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestConvert15Bit.java" afterPath="$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestConvert15Bit.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestConvert7Bit.java" afterPath="$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestConvert7Bit.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/UCS22Bytes.java" afterPath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/UCS22Bytes.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MOVED" beforePath="E:\workspace\IDEAProjects\Byte2UCS2\src\test\java\com\raycom\support\byte2ucs2\testUCS2Convert.java" afterPath="$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestUCS2Convert.java" />
     </list>
     <ignored path="Byte2UCS2.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Byte2UCS2.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1373953886781" ignored="false" />
     <file path="/pom.xml" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1373867188437" ignored="false" />
-    <file path="/Dummy.txt" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374044207671" ignored="false" />
+    <file path="/Dummy.txt" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374048252765" ignored="false" />
     <file path="/fragment.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374044248265" ignored="false" />
     <file path="/*.regexp" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1373939491953" ignored="false" />
     <file path="/Create4BitBuf.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1373941965937" ignored="false" />
@@ -22,15 +23,17 @@
     <file path="/File Header.txt.ft" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1373943114953" ignored="false" />
     <file path="/Convert7BitBuffer.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1373962399109" ignored="false" />
     <file path="/Convert4Bit.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1373963076281" ignored="false" />
-    <file path="/UCS22Bytes.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1373968517453" ignored="false" />
-    <file path="/Bytes2UCS2.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1373964036343" ignored="false" />
+    <file path="/UCS22Bytes.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374048158531" ignored="false" />
+    <file path="/Bytes2UCS2.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374048219203" ignored="false" />
     <file path="/testUCS2Convert.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1373968733796" ignored="false" />
-    <file path="/Convert15Bit.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374030007406" ignored="false" />
+    <file path="/Convert15Bit.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374047382125" ignored="false" />
     <file path="/BitTable.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374044936484" ignored="false" />
     <file path="/Convert15BitNew.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374046732468" ignored="false" />
-    <file path="/TestConvert15Bit.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374047035343" ignored="false" />
+    <file path="/TestConvert15Bit.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374047945500" ignored="false" />
     <file path="/TestUCS2Convert.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374045482515" ignored="false" />
     <file path="/TestConvert7Bit.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374045500109" ignored="false" />
+    <file path="/Convert7Bit.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374047262140" ignored="false" />
+    <file path="/Catch Statement Body.txt.ft" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374048272390" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +85,7 @@
       </breakpoint>
     </breakpoint_any>
     <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Bytes2UCS2.java" line="260" class="com.raycom.support.byte2ucs2.Bytes2UCS2" package="com.raycom.support.byte2ucs2">
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Bytes2UCS2.java" line="261" class="com.raycom.support.byte2ucs2.Bytes2UCS2" package="com.raycom.support.byte2ucs2">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -156,8 +159,32 @@
       <file leaf-file-name="Convert15Bit.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert15Bit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="0" selection-start="1735" selection-end="1735" vertical-scroll-proportion="0.0">
+            <state line="22" column="48" selection-start="347" selection-end="347" vertical-scroll-proportion="0.0">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Bytes2UCS2.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Bytes2UCS2.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="264" column="13" selection-start="18730" selection-end="18730" vertical-scroll-proportion="0.5206422">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1027#1033#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UCS22Bytes.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/UCS22Bytes.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="47" column="7" selection-start="1028" selection-end="1028" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#1184#1204#0" expanded="true" />
+                <element signature="e#2017#2023#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -165,25 +192,16 @@
       <file leaf-file-name="TestUCS2Convert.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestUCS2Convert.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="18" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0">
+            <state line="156" column="17" selection-start="15794" selection-end="15794" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Convert7Bit.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Convert7Bit.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert7Bit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="60" selection-start="1350" selection-end="1350" vertical-scroll-proportion="0.6637555">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestConvert7Bit.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestConvert7Bit.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="18" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0">
+            <state line="54" column="13" selection-start="1285" selection-end="1285" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -201,7 +219,7 @@
       <file leaf-file-name="TestConvert15Bit.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestConvert15Bit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="65" selection-start="1730" selection-end="1730" vertical-scroll-proportion="0.0">
+            <state line="37" column="56" selection-start="2107" selection-end="2107" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -231,16 +249,16 @@
         <option value="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert4BitBuffer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert7BitBuffer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert4Bit.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Bytes2UCS2.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/testUCS2Convert.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/UCS22Bytes.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert7Bit.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/BitTable.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestConvert7Bit.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestUCS2Convert.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert15BitNew.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestConvert15Bit.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert7Bit.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert15Bit.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestConvert15Bit.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/UCS22Bytes.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestUCS2Convert.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Bytes2UCS2.java" />
       </list>
     </option>
   </component>
@@ -723,8 +741,8 @@
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Application.TestConvert15Bit" />
-        <item index="1" class="java.lang.String" itemvalue="Application.TestConvert7Bit" />
-        <item index="2" class="java.lang.String" itemvalue="Application.TestUCS2Convert" />
+        <item index="1" class="java.lang.String" itemvalue="Application.TestUCS2Convert" />
+        <item index="2" class="java.lang.String" itemvalue="Application.TestConvert7Bit" />
         <item index="3" class="java.lang.String" itemvalue="Application.Convert7Bit" />
         <item index="4" class="java.lang.String" itemvalue="Application.Bytes2UCS2" />
       </list>
@@ -758,6 +776,11 @@
       <created>1373857486000</created>
       <updated>1373857486000</updated>
     </task>
+    <task id="LOCAL-00001" summary="15Bit编解码完成.">
+      <created>1374047235218</created>
+      <updated>1374047235218</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -787,6 +810,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918397" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42461964" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -795,18 +819,17 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918397" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918397" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32918397" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918397" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998565" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24964131" sideWeight="0.67081606" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32918397" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24964131" sideWeight="0.67081606" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918397" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918397" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
     </layout>
@@ -853,7 +876,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" />
+    <option name="LAST_COMMIT_MESSAGE" value="UCS2Convert编码码编写完成." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -867,6 +890,8 @@
     <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
+    <MESSAGE value="15Bit编解码完成." />
+    <MESSAGE value="UCS2Convert编码码编写完成." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -885,7 +910,7 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1049#1055#0" expanded="true" />
+            <element signature="e#1027#1033#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -920,26 +945,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Bytes2UCS2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="93" column="0" selection-start="2505" selection-end="2505" vertical-scroll-proportion="-57.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1049#1055#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/UCS22Bytes.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="48" selection-start="1712" selection-end="1712" vertical-scroll-proportion="-40.28">
-          <folding>
-            <element signature="e#1166#1186#0" expanded="true" />
-            <element signature="e#1999#2005#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/raycom/support/HexConvert.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="16" column="20" selection-start="478" selection-end="478" vertical-scroll-proportion="0.6637555">
@@ -963,36 +968,56 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestConvert7Bit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="18" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestConvert15Bit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="65" selection-start="1730" selection-end="1730" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestUCS2Convert.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="18" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert15Bit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="0" selection-start="1735" selection-end="1735" vertical-scroll-proportion="0.0">
+        <state line="10" column="18" selection-start="184" selection-end="184" vertical-scroll-proportion="0.41484717">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert7Bit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="60" selection-start="1350" selection-end="1350" vertical-scroll-proportion="0.6637555">
+        <state line="54" column="13" selection-start="1285" selection-end="1285" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Convert15Bit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="48" selection-start="347" selection-end="347" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestConvert15Bit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="56" selection-start="2107" selection-end="2107" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/UCS22Bytes.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="7" selection-start="1028" selection-end="1028" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#1184#1204#0" expanded="true" />
+            <element signature="e#2017#2023#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestUCS2Convert.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="156" column="17" selection-start="15794" selection-end="15794" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Bytes2UCS2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="264" column="13" selection-start="18730" selection-end="18730" vertical-scroll-proportion="0.5206422">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1027#1033#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

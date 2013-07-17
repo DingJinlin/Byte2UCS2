@@ -25,7 +25,7 @@ public class UCS22Bytes extends UCS2Convert {
     /**
      * 还原数据内容
      *
-     * @return
+     * @return 还原后的数据
      */
     private byte[] revertData() {
         for(Integer groupSeq : groups.keySet()) {
@@ -45,7 +45,7 @@ public class UCS22Bytes extends UCS2Convert {
     /**
      * 获取替换组内容
      *
-     * @return
+     * @return 获取替换位置的MAP
      */
     private Map<Integer, Set<Byte>> revertReplacementGroupBuf(byte data[]) {
         Map<Integer, Set<Byte>> groups = new HashMap<Integer, Set<Byte>>();
@@ -101,6 +101,9 @@ public class UCS22Bytes extends UCS2Convert {
 
         buf.get(replacementArea);
         buf.get(dataBuf);
+
+        // 使用15bit解码数据
+        replacementArea = new Convert15Bit().decoding(replacementArea);
 
         // 获取替换区内容
         groups = revertReplacementGroupBuf(replacementArea);

@@ -43,16 +43,14 @@ public class Convert7Bit {
 
     /**
      * 获取还原数据
-     * @return
+     * @return 还原后的数据
      */
     public byte[] decoding(byte[] data) {
         int bufLen = data.length - (data.length + 7 ) / 8 ;
         ByteBuffer buf = ByteBuffer.allocate(bufLen);
 
         for(int i = 0; i != data.length; i++) {
-            if((i + 1) % 8 == 0 || i + 1 == data.length) {
-                continue;
-            } else {
+            if ((i + 1) % 8 != 0 && i + 1 != data.length) {
                 convertByte = data[i + 1];
                 int left = (i % 8) + 1;
                 int right = 7 - left;

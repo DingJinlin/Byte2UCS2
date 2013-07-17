@@ -36,8 +36,6 @@ public class Bytes2UCS2 extends UCS2Convert {
 
     /**
      * 替换数据内容
-     *
-     * @return
      */
     private void replaceData() {
         // 计算组数
@@ -65,7 +63,7 @@ public class Bytes2UCS2 extends UCS2Convert {
     /**
      * 组包替换组内容
      *
-     * @return
+     * @return 将替换位置转换为字节数据
      */
     private byte[] createReplacementGroupBuf(Map<Integer, Set<Byte>> groups) {
         Set<Integer> groupSeqSet = groups.keySet();
@@ -108,6 +106,9 @@ public class Bytes2UCS2 extends UCS2Convert {
 
         // 替换区
         byte[] replacementArea = createReplacementGroupBuf(groups);
+
+        // 使用15bit编码数据
+        replacementArea = new Convert15Bit().coding(replacementArea);
 
         // 组包内容
         ByteBuffer buf = ByteBuffer.allocate(2 + replacementArea.length + dataBuf.length);
@@ -254,14 +255,14 @@ public class Bytes2UCS2 extends UCS2Convert {
             (byte) 0xD3, (byte) 0x98, (byte) 0x35, (byte) 0xCC, (byte) 0x02, (byte) 0x3C, (byte) 0xA7, (byte) 0xC2
         };
 
-        Bytes2UCS2 bytes2UCS2 = null;
+        Bytes2UCS2 bytes2UCS2;
         try {
             bytes2UCS2 = new Bytes2UCS2(inData);
             byte[] outData = bytes2UCS2.convert();
             System.out.println("In data: " + HexConvert.byte2String(inData));
             System.out.println("Out data: " + HexConvert.byte2String(outData));
         } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
     }
 

@@ -19,6 +19,11 @@ public class Convert15Bit {
     /**
      * 编码
      */
+    /**
+     * 将数据转换为15Bit一位的数据
+     * @param data 待编码的数据
+     * @return 编码后的数据
+     */
     public byte[] coding(byte[] data) {
         byte[] inData;
         // 处理奇数字节
@@ -59,7 +64,7 @@ public class Convert15Bit {
 
     /**
      * 获取还原数据
-     * @return
+     * @return 还原后的数据
      */
     public byte[] decoding(byte[] data) {
         int bufLen = data.length - (data.length + 31) / 32 * 2;
@@ -69,7 +74,6 @@ public class Convert15Bit {
         for(int i = 0; i != data.length / 2; i++) {
             if(i % 16 == 15 || i == data.length / 2 - 1) {
                 currentData = inDataBuf.getShort();
-                continue;
             } else {
                 currentData = inDataBuf.getShort();
                 convertData = inDataBuf.getShort();

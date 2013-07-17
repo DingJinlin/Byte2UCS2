@@ -24,9 +24,9 @@ public class TestConvert15Bit {
     };
 
     public static void main(String[] args) {
-        byte[] outData = new Convert15Bit().coding(inData);
+        byte[] outData = new Convert15Bit().coding(TestUCS2Convert.inData);
         System.out.println("Coding....");
-        System.out.println("In data:  " + HexConvert.byte2String(inData));
+        System.out.println("In data:  " + HexConvert.byte2String(TestUCS2Convert.inData));
         System.out.println("Out data: " + HexConvert.byte2String(outData));
 
         inData = new Convert15Bit().decoding(outData);
