@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.30raycom.support</groupId>
-    <artifactId>Byte2UCS2</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>byte2UCS2</artifactId>
+    <version>1.0.1</version>
 
-    <dependencies>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.4</version>
-        </dependency>
-    </dependencies>
+    <!--<dependencies>-->
+        <!--<dependency>-->
+            <!--<groupId>commons-lang</groupId>-->
+            <!--<artifactId>commons-lang</artifactId>-->
+            <!--<version>2.4</version>-->
+        <!--</dependency>-->
+    <!--</dependencies>-->
 </project>

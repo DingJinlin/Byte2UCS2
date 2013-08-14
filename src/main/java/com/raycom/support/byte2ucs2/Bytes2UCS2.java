@@ -21,7 +21,7 @@ public class Bytes2UCS2 extends UCS2Convert {
         dataLen = data.length;
 
         if (dataLen > MAX_DATA_LEN) {
-            throw new Exception("超出取大长度");
+            throw new Exception("超出最大长度");
         }
 
         // 数据内容缓存长度

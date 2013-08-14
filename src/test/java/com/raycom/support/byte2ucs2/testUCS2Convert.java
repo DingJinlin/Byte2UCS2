@@ -147,7 +147,17 @@ public class TestUCS2Convert {
             System.out.println("Coding: ");
             System.out.println("In data: " + HexConvert.byte2String(inData));
             System.out.println("Out data: " + HexConvert.byte2String(outData));
-
+            String stringData = new String(outData, "UNICODEBIGU");
+            // UTF8 Test start
+//            System.out.println("GBK Test");
+//            String content = new String(outData, "ISO-10646-UCS-2");
+//            byte[] utf8Data = content.getBytes("UTF-8");
+//
+//            String utf8String = new String(utf8Data, "UTF-8");
+//            outData = utf8String.getBytes("ISO-10646-UCS-2");
+//            System.out.println("GBK Out data: " + HexConvert.byte2String(outData));
+            // UTF8 Test end
+            outData = stringData.getBytes("ISO-8859-1");
             UCS22Bytes ucs22Bytes = new UCS22Bytes(outData);
             inData = ucs22Bytes.convert();
             System.out.println("Decoding: ");
