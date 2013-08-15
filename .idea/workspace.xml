@@ -7,11 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8fc94e26-da98-4c28-8f99-55040aaa653d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/artifacts/byte2UCS2_jar.xml" />
-      <change type="DELETED" beforePath="E:\workspace\IDEAProjects\Byte2UCS2\.idea\libraries\Maven__commons_lang_commons_lang_2_4.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Byte2UCS2.iml" afterPath="$PROJECT_DIR$/Byte2UCS2.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Bytes2UCS2.java" afterPath="$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/Bytes2UCS2.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MOVED" beforePath="E:\workspace\IDEAProjects\Byte2UCS2\src\test\java\com\raycom\support\byte2ucs2\testUCS2Convert.java" afterPath="$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestUCS2Convert.java" />
     </list>
@@ -19,8 +14,8 @@
     <ignored path=".idea/workspace.xml" />
     <file path="/Byte2UCS2.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1373953886781" ignored="false" />
     <file path="/pom.xml" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376451856609" ignored="false" />
-    <file path="/Dummy.txt" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376451729562" ignored="false" />
-    <file path="/fragment.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376452816171" ignored="false" />
+    <file path="/Dummy.txt" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376531605312" ignored="false" />
+    <file path="/fragment.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376480935250" ignored="false" />
     <file path="/*.regexp" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1373939491953" ignored="false" />
     <file path="/Create4BitBuf.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1373941965937" ignored="false" />
     <file path="/Convert4BitBuffer.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1373958328937" ignored="false" />
@@ -35,13 +30,30 @@
     <file path="/BitTable.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374044936484" ignored="false" />
     <file path="/Convert15BitNew.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374046732468" ignored="false" />
     <file path="/TestConvert15Bit.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374047945500" ignored="false" />
-    <file path="/TestUCS2Convert.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376452747609" ignored="false" />
+    <file path="/TestUCS2Convert.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376459534828" ignored="false" />
     <file path="/TestConvert7Bit.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374045500109" ignored="false" />
     <file path="/Convert7Bit.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374047262140" ignored="false" />
     <file path="/Catch Statement Body.txt.ft" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1374048272390" ignored="false" />
     <file path="$PROJECT_DIR$/../../IDEAStudy/TestJPushNetty/server/pom.xml" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376452326140" ignored="false" />
-    <file path="/JPushServerHandler.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376452522218" ignored="false" />
-    <file path="$PROJECT_DIR$/../../IDEAStudy/TestJPushNetty/server/src/main/java/server/handler/JPushServerHandler.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376452577390" ignored="false" />
+    <file path="/JPushServerHandler.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376480724968" ignored="false" />
+    <file path="$PROJECT_DIR$/../../IDEAStudy/TestJPushNetty/server/src/main/java/server/handler/JPushServerHandler.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376480752640" ignored="false" />
+    <file path="$PROJECT_DIR$/../../IDEAStudy/TestJPushNetty/android/src/main/java/com/ding/testpush/MyReceiver.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376479792578" ignored="false" />
+    <file path="/MyReceiver.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376479760812" ignored="false" />
+    <file path="$PROJECT_DIR$/../../IDEAStudy/TestJPushNetty/android/gen/com/ding/testpush/BuildConfig.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376477161328" ignored="false" />
+    <file path="$PROJECT_DIR$/../../IDEAStudy/TestJPushNetty/android/pom.xml" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376479112765" ignored="false" />
+    <file path="$PROJECT_DIR$/../../IDEAStudy/TestJPushNetty/android/android.iml" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376479167171" ignored="false" />
+    <file path="$PROJECT_DIR$/../../IDEAStudy/TestJPushNetty/android/src/main/java/com/ding/testpush/client/MessageClient.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376479788781" ignored="false" />
+    <file path="/MessageClient.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376479786109" ignored="false" />
+    <file path="$PROJECT_DIR$/../../IDEAStudy/TestJPushNetty/android/src/main/java/com/ding/testpush/client/handler/JPushClientHandler.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376477932390" ignored="false" />
+    <file path="$PROJECT_DIR$/../../IDEAStudy/TestJPushNetty/android/src/main/java/com/ding/testpush/client/handler/MessageClientHandler.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376481156718" ignored="false" />
+    <file path="/MessageClientHandler.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376481151734" ignored="false" />
+    <file path="$PROJECT_DIR$/../../IDEAStudy/TestJPushNetty/android/src/main/resources/protocols/MessageProto.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376479075500" ignored="false" />
+    <file path="$PROJECT_DIR$/../../IDEAStudy/TestJPushNetty/server/src/test/java/client/JPushClient.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376482904453" ignored="false" />
+    <file path="/JPushClient.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376482832515" ignored="false" />
+    <file path="$PROJECT_DIR$/../../IDEAStudy/TestJPushNetty/server/src/test/java/RunClient.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376481466640" ignored="false" />
+    <file path="/RunClient.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376481462421" ignored="false" />
+    <file path="$PROJECT_DIR$/../../IDEAStudy/TestJPushNetty/server/src/test/java/client/handler/JPushClientHandler.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376481173718" ignored="false" />
+    <file path="/JPushClientHandler.java" changelist="8fc94e26-da98-4c28-8f99-55040aaa653d" time="1376481171984" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +149,7 @@
       <file leaf-file-name="TestUCS2Convert.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestUCS2Convert.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="149" column="64" selection-start="15500" selection-end="15500" vertical-scroll-proportion="0.218509">
+            <state line="161" column="49" selection-start="16133" selection-end="16133" vertical-scroll-proportion="4.3825216">
               <folding />
             </state>
           </provider>
@@ -146,10 +158,8 @@
       <file leaf-file-name="UCS22Bytes.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/UCS22Bytes.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="111" column="41" selection-start="3048" selection-end="3048" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#2017#2023#0" expanded="true" />
-              </folding>
+            <state line="111" column="28" selection-start="3048" selection-end="3048" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -763,20 +773,19 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-4" width="1448" height="878" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.42461964" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42461964" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918397" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918397" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32827586" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918397" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -785,10 +794,11 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24964131" sideWeight="0.5753804" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918397" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918397" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32827586" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -953,16 +963,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/raycom/support/byte2ucs2/UCS22Bytes.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="41" selection-start="3048" selection-end="3048" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#2017#2023#0" expanded="true" />
-          </folding>
+        <state line="111" column="28" selection-start="3048" selection-end="3048" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/raycom/support/byte2ucs2/TestUCS2Convert.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="149" column="64" selection-start="15500" selection-end="15500" vertical-scroll-proportion="0.218509">
+        <state line="161" column="49" selection-start="16133" selection-end="16133" vertical-scroll-proportion="4.3825216">
           <folding />
         </state>
       </provider>
