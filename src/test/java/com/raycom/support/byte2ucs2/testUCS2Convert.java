@@ -140,7 +140,6 @@ public class TestUCS2Convert {
     };
 
     public static void main(String[] args) {
-
         try {
             Bytes2UCS2 byte2UCS2 = new Bytes2UCS2(inData);
             byte[] outData = byte2UCS2.convert();
